@@ -1,11 +1,11 @@
-require_relative 'Apostador.rb'
-require_relative 'ApostadorView.rb'
+require_relative 'Better.rb'
+require_relative 'BetterView.rb'
 
-class ApostadorController < Object
+class BetterController < Object
 
 	def initialize
-		@model = Apostador.new
-		@view = ApostadorView.new
+		@model = Better.new
+		@view = BetterView.new
 	end
 
 	def createUser

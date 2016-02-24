@@ -1,4 +1,4 @@
-class Apostador < Object
+class Better < Object
 	attr_reader :username , :password, :saldo
 	def initialize
 		@username = "John Doe"

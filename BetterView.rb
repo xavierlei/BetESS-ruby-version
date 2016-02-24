@@ -1,4 +1,4 @@
-class ApostadorView < Object
+class BetterView < Object
 
 	def printView(usr,saldo)
 		puts usr
