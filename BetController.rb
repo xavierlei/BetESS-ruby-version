@@ -6,7 +6,11 @@ class BetController < Object
 	def initialize(gambler_id)
 		@view = BetView.new
 		@model = Bet.new
+<<<<<<< HEAD
 		@model.setBetter(gambler_id)
+=======
+		@mode.setGambler(Gambler)
+>>>>>>> origin/master
 	end
 
 def createGambler

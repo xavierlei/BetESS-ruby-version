@@ -1,4 +1,4 @@
-class BetterView < Object
+class GamblerView < Object
 
 	def printView(usr,saldo)
 		puts usr
@@ -6,19 +6,19 @@ class BetterView < Object
 	end
 
 	def createView
-		puts "introduza o seu username"
+		puts "type your username"
 		username = gets.chomp
-		puts "introduza a sua password"
+		puts "type you password"
 		passwd = gets.chomp
-		puts "introduza o seu saldo"
+		puts "type your BetCoin credit"
 		saldo = gets.chomp.to_f
 		res = [username,passwd,saldo]
 	end
 
 	def updateView
-		puts "introduza a sua nova password"
+		puts "type your new password"
 		passwd = gets.chomp
-		puts "introduza o seu saldo"
+		puts "type your credit"
 		saldo = gets.chomp.to_f
 		res = [passwd,saldo]
 	end
