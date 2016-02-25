@@ -1,9 +1,9 @@
 class bet < Object
-	attr_reader :velue,:result,:odd,:better
+	attr_reader :value,:result,:odd,:gambler_id
 	def initialize
 		@value
 		@result
-		@better
+		@gambler_id
 		@odd
 	end
 
@@ -15,8 +15,8 @@ class bet < Object
 		@result = result
 	end
 
-	def setBetter(better)
-		@better = better
+	def setGambler(gambler_id)
+		@gambler_id = gambler_id
 	end
 
 	def setOdd(odd)
