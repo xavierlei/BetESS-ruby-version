@@ -2,7 +2,7 @@ require_relative 'Gambler.rb'
 require_relative 'GamblerView.rb'
 
 class GamblerController < Object
-
+	attr_reader :model
 	def initialize
 		@model = Gambler.new
 		@view = GamblerView.new

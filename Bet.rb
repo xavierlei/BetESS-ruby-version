@@ -1,4 +1,4 @@
-class bet < Object
+class Bet < Object
 	attr_reader :value,:result,:odd,:gambler_id
 	def initialize
 		@value
@@ -8,7 +8,7 @@ class bet < Object
 	end
 
 	def setValue(value)
-		@valor = value
+		@value = value
 	end
 
 	def setResult(result)
