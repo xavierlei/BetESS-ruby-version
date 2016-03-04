@@ -18,4 +18,11 @@ class BookieController < Object
 	def updateView
 		@view.printView(@model.username,@model.password)
 	end
+
+	def createDefaultBookie(name, pass)
+		@model.setUsername = name
+		@model.setPassword = pass
+	end
+
+
 end

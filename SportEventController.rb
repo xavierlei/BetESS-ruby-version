@@ -2,8 +2,8 @@ require_relative 'SportEvent.rb'
 require_relative 'SportEventView.rb'
 class SportEventController < Object
 	attr_reader :model
-	def initialize
-		@model = SportEvent.new
+	def initialize(owner, event_id)
+		@model = SportEvent.new(owner, event_id)
 		@view = SportEventView.new
 		@bet_list
 	end
@@ -14,12 +14,15 @@ class SportEventController < Object
 		@model.setTeam2(query[1])
 		@model.setOdd(query[2])
 		@bet_list = Hash.new('Gambler has no Bets on this SportsEvent')
-		
+
 	end
 
-	def updateSportEvent
-		query = @view.updateView
-		@model.setOdd(query)
+	def updateOdd
+		@model.setOdd(@view.updateOdd)
+	end
+
+	def updateState
+		@model.setState(@view.setState)
 	end
 
 	def updateView
