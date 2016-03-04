@@ -1,10 +1,11 @@
 class SportEvent < Object
-	attr_reader :team1,:team2,:result,:odd
-	def initialize
+	attr_reader :team1,:team2,:result,:odd,:owner_id
+	def initialize(owner)
 		@team1
 		@team2
 		@result = "-"
 		@odd = [1.0,1.0,1.0]
+		@owner_id = owner
 	end
 
 	def setTeam1(team)
