@@ -13,7 +13,8 @@ class SportEventController < Object
 		@model.setTeam1(query[0])
 		@model.setTeam2(query[1])
 		@model.setOdd(query[2])
-		@bet_list = Hash.new('Gambler has no Bets for this SportsEvent')
+		@bet_list = Hash.new('Gambler has no Bets on this SportsEvent')
+		
 	end
 
 	def updateSportEvent
