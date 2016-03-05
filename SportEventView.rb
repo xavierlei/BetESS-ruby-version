@@ -18,7 +18,7 @@ class SportEventView < Object
 		res = [team1,team2,[o1,od,o2]]
 	end
 
-	def updateView
+	def updateOdd
 		puts "input new odd for team 1"
 		o1 = gets.chomp
 		puts "input new odd for draw"
@@ -26,6 +26,11 @@ class SportEventView < Object
 		puts "input new odd for team 2"
 		o2 = gets.chomp
 		res = [o1,od,o2]
+	end
+
+	def updateState
+		puts "input event state"
+		s = gets.chomp
 	end
 
 end
