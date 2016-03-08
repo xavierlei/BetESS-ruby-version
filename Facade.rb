@@ -10,15 +10,15 @@ class Facade < Object
     @event_counter = 0
   end
 
-  gamblers = Hash.new('user doesnt exist!\n') #GamblersController.model.password
-  bookies = Hash.new('user doesnt exist!\n') #BookieController.model.password
-  events = Hash.new('event doesnt exist!\n')
+  gamblers = Hash.new('user doesnt exist!\n') #GamblersController
+  bookies = Hash.new('user doesnt exist!\n') #BookieController
+  events = Hash.new('event doesnt exist!\n') #SportEventController
 
-  # Populate
+  # Populate -------------------------------
   pop = Populate.new
   pop.populate(gamblers, bookies, events, @event_counter)
 
-  # Login for Gamblers and Bookies
+  # Login for Gamblers and Bookies ---------
   def gamblerLogin(username, password)
     if password == gamblers[username].model.password
       puts "Login completed.\n"
@@ -36,7 +36,7 @@ class Facade < Object
     end
   end
 
-  # Gambler
+  # Gambler --------------------------------
   def registerGambler
     controller = GamblerController.new
     controller.createUser
@@ -47,9 +47,20 @@ class Facade < Object
       return controller
     end
   end
+  def gamblerBalance(gambler_id)
+    puts "saldo: #{ gamblers[gambler_id].model.saldo }"
+  end
+  def placeBet(event_id, gambler_id)
+    bet_controller = BetController.new
+    odd = events[event_id].model.odd
+    bet_controller.create(gambler_id,odd)
+    events[event_id].addBet(bet_controller)
+  end
+  def bettingHistory
+    puts "NotImplemented"
+  end
 
-
-  # Bookie
+  # Bookie ---------------------------------
   def registerBookie
     controller = BookieController.new
     controller.create
@@ -60,12 +71,34 @@ class Facade < Object
       return controller
     end
   end
+  def updateEventState(event_id)
+    events[event_id].updateState
+  end
+  def changeOdd(event_id)
+    events[event_id].updateOdd
+  end
+  def endEvent
+    puts "NotImplemented"
+  end
+  def showInterest
+    puts "NotImplemented"
+  end
+  def bookieNotifications
+    puts "NotImplemented"
+  end
 
-  # Event
+  # Event ----------------------------------
   def newEvent(owner)
     controller = SportEventController.new(owner, @event_counter++)
     controller.createSportEvent
     events[controller.model.event_id] = controller
   end
+  def listEvents
+    events.each do |key,value|
+      if value.model.state #mudar nome 'state' para 'open'
+        puts "#{key} - #{value}"
+      end
+  end
+
 
 end
