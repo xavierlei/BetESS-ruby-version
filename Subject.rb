@@ -1,3 +1,4 @@
+#some random comments
 module subject
 	attr_reader :observers
 	def initialize
