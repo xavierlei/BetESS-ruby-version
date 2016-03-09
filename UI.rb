@@ -1,4 +1,5 @@
-#require_relative 'Facade.rb'
+require_relative 'Facade.rb'
+
 class UI < Object
 	def initialize
 		@on = true
@@ -27,6 +28,7 @@ class UI < Object
 		puts "close [event_id]"
 		puts "setings"
 		puts "exit"
+	end
 
 	def loggedGambler
 		while @logged && @on do

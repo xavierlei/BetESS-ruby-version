@@ -27,9 +27,9 @@ class GamblerController < Object
 	end
 
 	def createDefaultGambler(name, pass, saldo)
-		@model.setUsername = name
-		@model.setPassword = pass
-		@model.setSaldo = saldo
+		@model.setUsername(name)
+		@model.setPassword(pass)
+		@model.setSaldo(saldo)
 	end
 
 end
