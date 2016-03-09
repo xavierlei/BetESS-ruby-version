@@ -1,8 +1,11 @@
-#require_relative 'Facade.rb'
+require_relative 'Facade.rb'
+
 class UI < Object
+
 	def initialize
 		@on = true
 		@logged = false
+		@facade = Facade.new
 	end
 
 	def printMenuLogin
@@ -27,6 +30,7 @@ class UI < Object
 		puts "close [event_id]"
 		puts "setings"
 		puts "exit"
+	end
 
 	def loggedGambler
 		while @logged && @on do
@@ -52,4 +56,5 @@ class UI < Object
 			cmd = gets.chomp
 		end
 	end
+
 end
