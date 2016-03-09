@@ -56,7 +56,7 @@ class Facade < Object
     bet_controller.create(gambler_id,odd)
     events[event_id].addBet(bet_controller)
   end
-  def bettingHistory
+  def bettingHistory(gambler_id)
     puts "NotImplemented"
   end
 
@@ -77,8 +77,8 @@ class Facade < Object
   def changeOdd(event_id)
     events[event_id].updateOdd
   end
-  def endEvent
-    puts "NotImplemented"
+  def endEvent(event_id)
+    events[event_id].setResult
   end
   def showInterest
     puts "NotImplemented"

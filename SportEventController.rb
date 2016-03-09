@@ -22,7 +22,13 @@ class SportEventController < Object
 	end
 
 	def updateState
-		@model.setState(@view.setState)
+		@model.setState(@view.updateState)
+	end
+
+	def setResult
+		unless @model.result == "-"
+			@model.setResult(@view.setResult)
+		end
 	end
 
 	def updateView

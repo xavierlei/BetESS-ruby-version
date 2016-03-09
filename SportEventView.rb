@@ -33,4 +33,9 @@ class SportEventView < Object
 		s = gets.chomp
 	end
 
+	def setResult
+		puts "input the ending result"
+		return gets.chomp
+	end
+
 end
