@@ -17,24 +17,38 @@ class Facade < Object
   end
 
 
-
+#BEGIN listar Hashes ------
+def listarEventos
+  @events.each do |key,value|
+      puts "#{key} - #{value}"
+  end
+end
+#END listar Hashes --------
 
 
   # Login for Gamblers and Bookies ---------
   def gamblerLogin(username, password)
-    if password == @gamblers[username].model.password
-      puts "Login completed.\n"
-      controller = @gamblers[username]
+    if @gamblers.key?(username)
+      if password == @gamblers[username].model.password
+        puts "[OK]\tLogin completed. Welcome #{username}\n"
+        controller = @gamblers[username]
+      else
+        return nil
+      end
     else
-      return nil
+      puts "[!]\tFalhou o Login para #{username}"
     end
   end
   def bookieLogin(username, password)
-    if password ==  @bookies[username].model.password
-      puts "Login completed.\n"
-      controller =  @bookies[username]
+    if @bookies.key?(username)
+      if password ==  @bookies[username].model.password
+        puts "[OK]\tLogin completed. Welcome #{username}\n"
+        controller =  @bookies[username]
+      else
+        return nil
+      end
     else
-      return nil
+      puts "[!]\tFalhou Login para #{username}"
     end
   end
 
@@ -49,14 +63,15 @@ class Facade < Object
       return controller
     end
   end
-  def gamblerBalance(gambler_id)
-    puts "saldo: #{ @gamblers[gambler_id].model.saldo }"
-  end
+
   def placeBet(event_id, gambler_id)
-    bet_controller = BetController.new
-    odd = @events[event_id].model.odd
-    bet_controller.create(gambler_id,odd)
-    @events[event_id].addBet(bet_controller)
+    if @events.key?(event_id)
+      bet_controller = BetController.new
+      odd = @events[event_id].model.odd
+      bet_controller.create(gambler_id,odd)
+      @events[event_id].addBet(bet_controller)
+      @gamblers[gambler_id].registBet(event_id,bet_controller)
+    end
   end
   def bettingHistory(gambler_id)
     puts "NotImplemented"
@@ -74,13 +89,19 @@ class Facade < Object
     end
   end
   def updateEventState(event_id)
-    @events[event_id].updateState
+    if @events.key?(event_id)
+      @events[event_id].updateState
+    end
   end
   def changeOdd(event_id)
-    @events[event_id].updateOdd
+    if @events.key?(event_id)
+      @events[event_id].updateOdd
+    end
   end
   def endEvent(event_id)
-    @events[event_id].setResult
+    if @events.key?(event_id)
+      @events[event_id].setResult
+    end
   end
   def showInterest
     puts "NotImplemented"
@@ -94,12 +115,21 @@ class Facade < Object
     controller = SportEventController.new(owner, @event_counter+=1)
     controller.createSportEvent
     @events[controller.model.event_id] = controller
+    puts @events
   end
-  def listEvents
-    @events.each do |key,value|
-      if value.model.state #mudar nome 'state' para 'open'
-        puts "#{key} - #{value}"
+  def openEvent(event_id)
+    if @events.key?(event_id)
+      @events[event_id].model.setState(true)
     end
   end
-end
+  def listEvents(owner_id)
+    @events.each do |key,value|
+      if value.model.owner_id == owner_id
+        value.updateView
+      end
+    end
+  end
+
+
+
 end
