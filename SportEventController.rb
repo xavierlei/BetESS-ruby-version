@@ -5,7 +5,13 @@ class SportEventController < Object
 	def initialize(owner, event_id)
 		@model = SportEvent.new(owner, event_id)
 		@view = SportEventView.new
-		@bet_list
+		@bet_list = Hash.new('Gambler has no Bets on this SportsEvent')
+	end
+
+	def createDefaultSportEvent(team1, team2, odd)
+		@model.setTeam1(team1)
+		@model.setTeam2(team2)
+		@model.setOdd(odd)
 	end
 
 	def createSportEvent
@@ -13,8 +19,6 @@ class SportEventController < Object
 		@model.setTeam1(query[0])
 		@model.setTeam2(query[1])
 		@model.setOdd(query[2])
-		@bet_list = Hash.new('Gambler has no Bets on this SportsEvent')
-
 	end
 
 	def updateOdd
@@ -32,11 +36,11 @@ class SportEventController < Object
 	end
 
 	def updateView
-		@view.printView(@model.team1,@model.team2,@model.odd,@model.result)
+		@view.printView(@model.event_id,@model.state,@model.team1,@model.team2,@model.odd,@model.result)
 	end
 
 	def addBet(bet)
-		unless @bet_list.has_key?(bet.model.gambler_id)
+		unless @bet_list.key?(bet.model.gambler_id)
 			@bet_list[bet.model.gambler_id] = [bet]
 		else
 			@bet_list[bet.model.gambler_id].push(bet)

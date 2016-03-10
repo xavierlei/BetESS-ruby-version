@@ -1,9 +1,14 @@
 class SportEventView < Object
-	def printView(team1,team2,odd,result)
+
+	def printView(event_id,state,team1,team2,odd,result)
+		puts "______________"
+		puts "id: #{event_id}"
+		puts "state: #{state}"
 		puts "#{team1} X #{team2}"
 		puts "odds = {#{odd[0]},#{odd[1]},#{odd[2]}}"
 		puts "result = #{result}"
 	end
+
 	def createView
 		puts "input team1"
 		team1 = gets.chomp

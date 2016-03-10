@@ -1,5 +1,4 @@
 require_relative 'Facade.rb'
-#some random commit to teste a git feature
 class UI < Object
 
 	def initialize
@@ -34,19 +33,19 @@ class UI < Object
 
 	def loggedGambler
 		while @logged && @on do
-			#############
+			puts "not implemented yet"
 		end
 	end
 
 	def loggedBookie
 		while @logged && @on do
-			#############
+			puts "not implemented yet"
 		end
 	end
 
 	def notLogged
 		while @logged && @on do
-			#####
+			puts "not implemented yet"
 		end
 	end
 
@@ -56,5 +55,4 @@ class UI < Object
 			cmd = gets.chomp
 		end
 	end
-
 end

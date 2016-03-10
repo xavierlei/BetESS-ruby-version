@@ -20,8 +20,8 @@ class BookieController < Object
 	end
 
 	def createDefaultBookie(name, pass)
-		@model.setUsername = name
-		@model.setPassword = pass
+		@model.setUsername(name)
+		@model.setPassword(pass)
 	end
 
 
