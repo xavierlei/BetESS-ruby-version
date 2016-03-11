@@ -129,6 +129,13 @@ end
       end
     end
   end
+  def listGamblerAvailableEvents
+    @events.each do |key,value|
+      if value.model.state == true
+        value.updateView
+      end
+    end
+  end
 
 
 
