@@ -16,20 +16,21 @@ class GamblerController < Object
 		data = @view.createView
 		@model.setUsername(data[0])
 		@model.setPassword(data[1])
-		@model.setSaldo(data[2])
+		@model.setCoins(data[2])
 		@bet_list
 	end
 
 	def updateUser
 		data = @view.updateView
 		@model.setPassword(data[0])
-		@model.setSaldo(data[1])
+		@model.setCoins(data[1])
 	end
 	def registBet(event_id,betController)
 		if !(@bet_list.key?(event_id))
 			@bet_list[event_id]=[]
 		end
 		@bet_list[event_id].push(betController)
+		@model.setCoins(betController.model.value)
 	end
 
 	def printBets
@@ -40,13 +41,17 @@ class GamblerController < Object
     end
 	end
 	def updateView
-		@view.printView(@model.username,@model.saldo)
+		@view.printView(@model.username,@model.coins)
 	end
 
-	def createDefaultGambler(name, pass, saldo)
+	def addCoins(coins)
+		@model.setCoins(@model.coins+coins)
+	end
+
+	def createDefaultGambler(name, pass, coins)
 		@model.setUsername(name)
 		@model.setPassword(pass)
-		@model.setSaldo(saldo)
+		@model.setCoins(coins)
 	end
 
 end

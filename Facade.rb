@@ -6,6 +6,8 @@ require_relative 'Populate.rb'
 
 class Facade < Object
 
+  private :payGamblers
+
   def initialize
     @event_counter = 0
     @gamblers = Hash.new("user doesnt exist!\n") #GamblersController
@@ -98,13 +100,37 @@ end
       @events[event_id].updateOdd
     end
   end
+
+  def payGamblers(event_id)
+    total = 0.0
+    @events[event_id].bet_list.each{ |bet| 
+      if events[event_id].model.result == bet.model.result
+        o = bet.model.result == "win" ? bet.model.odd[0] : (bet.model.result == "draw" ? odd[1] : odd[2])
+        @gamblers[bet.model.gambler_id].addCoins(o*bet.model.value)
+        total+=(o*bet.model.value)
+    }
+    return total
+  end
   def endEvent(event_id)
     if @events.key?(event_id)
       @events[event_id].setResult
+      @event[event_id].notifyObserver(@bookies[@event.model.owner_id],"total win for event #{event_id} is #{payGamblers(event_id)} coins")   
     end
   end
-  def showInterest
-    puts "NotImplemented"
+
+  def showInterestBookie(bookie_id,event_id)
+    unless !(@events.has_key?(event_id))
+      if @bookies.has_key?(bookie_id)
+        @events[event_id].addObserver(@bookies[bookie_id])
+      end
+    end
+  end
+  def showInterestGambler(gambler_id,event_id)
+    unless !(@events.has_key?(event_id))
+      if @gamblers.has_key?(gambler_id)
+        @events[event_id].addObserver(@gamblers[gambler_id])
+      end
+    end
   end
   def bookieNotifications
     puts "NotImplemented"
@@ -114,9 +140,11 @@ end
   def newEvent(owner)
     controller = SportEventController.new(owner, @event_counter+=1)
     controller.createSportEvent
+    controller.addObserver(@bookies[owner]) #adiciona o bookie como observador do proprio evento
     @events[controller.model.event_id] = controller
     puts @events
   end
+
   def openEvent(event_id)
     if @events.key?(event_id)
       @events[event_id].model.setState(true)

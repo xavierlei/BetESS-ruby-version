@@ -5,7 +5,7 @@ require_relative 'Subject.rb'
 ## o mesmo para o calculo do total ganho e notify desse total 
 class SportEventController < Object
 	include Subject
-	attr_reader :model
+	attr_reader :model, :bet_list
 	def initialize(owner, event_id)
 		super()
 		@model = SportEvent.new(owner, event_id)

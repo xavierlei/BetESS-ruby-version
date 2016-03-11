@@ -18,6 +18,11 @@ module Subject
 	def deleteObservers
 		@observers = []
 	end
+	def notifyObserver(observer,message)
+		unless @observer.rindex(observer) == nil
+			@observer[@observer.rindex(observer)].updateObserver(message)
+		end
+	end
 	def notifyObservers(message)
 			@observers.each{|observer| observer.updateObserver(message)}
 	end

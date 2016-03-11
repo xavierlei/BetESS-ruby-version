@@ -1,9 +1,9 @@
 class Gambler < Object
-	attr_reader :username , :password, :saldo
+	attr_reader :username , :password, :coins
 	def initialize
 		@username = "John Doe"
 		@password
-		@saldo = 0.0
+		@coins = 0.0
 	end
 
 	def setUsername(usr)
@@ -14,8 +14,8 @@ class Gambler < Object
 		@password = passwd
 	end
 
-	def setSaldo(saldo)
-		@saldo = saldo
+	def setCoins(coins)
+		@coins = coins
 	end
 
 end
