@@ -1,5 +1,7 @@
 module Observer
-	def update(message)
+	def updateObserver(message)
+		puts"##########NOTIFICATION##########"
 		puts message
+		puts "###############################"
 	end
 end

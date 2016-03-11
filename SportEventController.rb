@@ -1,8 +1,13 @@
 require_relative 'SportEvent.rb'
 require_relative 'SportEventView.rb'
+require_relative 'Subject.rb'
+## de forma a não alterar todo o código, o addObserver para o bookie dono será feito no facade
+## o mesmo para o calculo do total ganho e notify desse total 
 class SportEventController < Object
+	include Subject
 	attr_reader :model
 	def initialize(owner, event_id)
+		super()
 		@model = SportEvent.new(owner, event_id)
 		@view = SportEventView.new
 		@bet_list = Hash.new('Gambler has no Bets on this SportsEvent')
@@ -23,15 +28,18 @@ class SportEventController < Object
 
 	def updateOdd
 		@model.setOdd(@view.updateOdd)
+		notifyObservers("odd for event nº #{@model.event_id} is now #{@model.odd}")
 	end
 
 	def updateState
 		@model.setState(@view.updateState)
+		notifyObservers("state of event nº #{@model.event_id} is now #{@model.state}")
 	end
 
 	def setResult
-		unless @model.result == "-"
+		unless @model.result != "-"
 			@model.setResult(@view.setResult)
+			notifyObservers("event nº #{@model.event_id} has ended with result: #{@model.result}")
 		end
 	end
 

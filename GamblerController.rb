@@ -1,9 +1,12 @@
 require_relative 'Gambler.rb'
 require_relative 'GamblerView.rb'
+require_relative 'Observer.rb'
 
 class GamblerController < Object
+	include Observer
 	attr_reader :model
 	def initialize
+		super()
 		@model = Gambler.new
 		@view = GamblerView.new
 		@bet_list = Hash.new([])

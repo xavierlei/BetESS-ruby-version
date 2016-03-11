@@ -1,8 +1,11 @@
 require_relative 'Bookie.rb'
 require_relative 'BookieView.rb'
+require_relative 'Observer.rb'
 class BookieController < Object
+	include Observer
 	attr_reader :model
 	def initialize
+		super()
 		@view = BookieView.new
 		@model = Bookie.new
 	end

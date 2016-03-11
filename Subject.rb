@@ -1,8 +1,8 @@
 #some random comments
-module subject
+module Subject
 	attr_reader :observers
 	def initialize
-		@observers = []
+		@observers = Array.new
 	end
 
 	def addObserver(observer)
@@ -19,7 +19,7 @@ module subject
 		@observers = []
 	end
 	def notifyObservers(message)
-		@observer.each{|observer| observer.update(message)}
+			@observers.each{|observer| observer.updateObserver(message)}
 	end
 =begin
 	def notifyObservers
