@@ -102,19 +102,22 @@ end
 
   def payGamblers(event_id)
     total = 0.0
-    @events[event_id].bet_list.each do |bet| 
-      if events[event_id].model.result == bet.model.result
-        o = bet.model.result == "win" ? bet.model.odd[0] : (bet.model.result == "draw" ? odd[1] : odd[2])
-        @gamblers[bet.model.gambler_id].addCoins(o*bet.model.value)
-        total+=(o*bet.model.value)
+    @events[event_id].bet_list.each do |key,gamblerBets| 
+      gamblerBets.each do |bet|
+        if @events[event_id].model.result == bet.model.result
+          o = bet.model.result == "win" ? bet.model.odd[0] : (bet.model.result == "draw" ? bet.model.odd[1] : bet.model.odd[2])
+          @gamblers[bet.model.gambler_id].addCoins(o*bet.model.value)
+          total+=(o*bet.model.value)
+        end
       end
     end
     return total
   end
+
   def endEvent(event_id)
     if @events.key?(event_id)
       @events[event_id].setResult
-      @event[event_id].notifyObserver(@bookies[@event.model.owner_id],"total win for event #{event_id} is #{payGamblers(event_id)} coins")   
+      @events[event_id].notifyObserver(@bookies[@events[event_id].model.owner_id],"total win for event #{event_id} is #{payGamblers(event_id)} coins")   
     end
   end
 

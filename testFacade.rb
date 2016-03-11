@@ -32,3 +32,5 @@ facade.placeBet(1,"afonso")
 #facade.placeBet(1,"afonso")
 #facade.placeBet(1,"afonso")
 afonso.printBets
+facade.endEvent(1)
+

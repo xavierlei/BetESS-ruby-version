@@ -26,14 +26,17 @@ class Populate < Object
 		# Event N1
 		control = SportEventController.new("rui",1)
 		control.createDefaultSportEvent("porto","benfica",[2,3,9])
+        control.addObserver(bookies['rui'])
 		events[1] = control
 		# Event N2
 		control = SportEventController.new("rui",2)
 		control.createDefaultSportEvent("algarve","beira-alta",[2,3,9])
+        control.addObserver(bookies['rui'])
 		events[2] = control
 		# Event N3
 		control = SportEventController.new("ana",3)
 		control.createDefaultSportEvent("aaa","bbb",[2,3,9])
+        control.addObserver(bookies['ana'])
 		events[3] = control
 
 	end

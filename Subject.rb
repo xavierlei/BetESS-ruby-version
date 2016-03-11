@@ -19,8 +19,10 @@ module Subject
 		@observers = []
 	end
 	def notifyObserver(observer,message)
-		unless @observer.rindex(observer) == nil
-			@observer[@observer.rindex(observer)].updateObserver(message)
+		@observers.each do|obj|
+			if obj == observer
+				obj.updateObserver(message)
+			end  
 		end
 	end
 	def notifyObservers(message)
