@@ -5,7 +5,7 @@ class UI < Object
 		@on = true
 		@logged = false
 		@facade = Facade.new
-		@session 
+		@session
 	end
 
 	def printMenuLogin
@@ -15,8 +15,8 @@ class UI < Object
 	end
 
 	def printMenuGambler
-		puts "list events"
-		puts "bet [event_id] [result] [value]"
+		puts "listevents"
+		puts "bet [event_id]"
 		puts "mybets"
 		puts "setings"
 		puts "exit"
@@ -39,8 +39,19 @@ class UI < Object
 	def loggedGambler
 		while @logged && @on do
 			self.printMenuGambler
-			cmd = gets.chomp
-			puts cmd
+			cmd = gets.chomp.split(" ")
+			#puts cmd
+			case cmd[0]
+			when "listevents"
+				puts "---  Eventos  ---"
+				@facade.listGamblerAvailableEvents
+			when "bet"
+			when "mybets"
+			when "setings"
+			when "exit"
+			else
+				puts "Command not recognized !"
+			end
 		end
 	end
 
@@ -63,13 +74,13 @@ class UI < Object
 			case cmd[1]
 			when "bookie"
 				@session = @facade.bookieLogin(cmd[2],cmd[3])
-				if @session != nil 
+				if @session != nil
 					@logged = true
 					self.loggedBookie
 				end
 			when "gambler"
 				@session = @facade.gamblerLogin(cmd[2],cmd[3])
-				if @session!=nil 
+				if @session!=nil
 					@logged = true
 					self.loggedGambler
 				end
@@ -97,8 +108,8 @@ class UI < Object
 			puts "error syntax"
 		end
 	end
-		
-	
+
+
 
 	def commandLine
 		while @on do
@@ -114,7 +125,7 @@ class UI < Object
 					@on = false
 				else
 					puts "syntax error"
-				end		
+				end
 			end
 		end
 	end
