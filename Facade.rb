@@ -6,7 +6,6 @@ require_relative 'Populate.rb'
 
 class Facade < Object
 
-  private :payGamblers
 
   def initialize
     @event_counter = 0
@@ -103,12 +102,13 @@ end
 
   def payGamblers(event_id)
     total = 0.0
-    @events[event_id].bet_list.each{ |bet| 
+    @events[event_id].bet_list.each do |bet| 
       if events[event_id].model.result == bet.model.result
         o = bet.model.result == "win" ? bet.model.odd[0] : (bet.model.result == "draw" ? odd[1] : odd[2])
         @gamblers[bet.model.gambler_id].addCoins(o*bet.model.value)
         total+=(o*bet.model.value)
-    }
+      end
+    end
     return total
   end
   def endEvent(event_id)
@@ -166,5 +166,5 @@ end
   end
 
 
-
+  private :payGamblers
 end
