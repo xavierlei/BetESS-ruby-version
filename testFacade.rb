@@ -34,3 +34,4 @@ facade.placeBet(1,"afonso")
 afonso.printBets
 facade.endEvent(1)
 
+afonso.readAllNotifications

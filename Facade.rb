@@ -3,6 +3,7 @@ require_relative 'BookieController.rb'
 require_relative 'SportEventController.rb'
 require_relative 'BetController.rb'
 require_relative 'Populate.rb'
+require_relative 'String.rb'
 
 class Facade < Object
 
@@ -67,6 +68,7 @@ class Facade < Object
       @gamblers[gambler_id].registBet(event_id,bet_controller)
     end
   end
+
   def bettingHistory(gambler_id)
     if @gamblers.key?(gambler_id)
       @gamblers[gambler_id].printBets
@@ -102,6 +104,7 @@ class Facade < Object
         if @events[event_id].model.result == bet.model.result
           o = bet.model.result == "win" ? bet.model.odd[0] : (bet.model.result == "draw" ? bet.model.odd[1] : bet.model.odd[2])
           @gamblers[bet.model.gambler_id].addCoins(o*bet.model.value)
+          @gamblers[bet.model.gambler_id].storeNotification("#{"You Win! ".green} #{o*bet.model.value} coins, event_id:#{event_id}, for the result:#{bet.model.result}" )
           total+=(o*bet.model.value)
         end
       end

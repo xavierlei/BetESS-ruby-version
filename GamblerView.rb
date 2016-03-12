@@ -28,4 +28,8 @@ class GamblerView < Object
 		res = [passwd,saldo]
 	end
 
+	def showNotification(message)
+		puts message
+	end
+
 end

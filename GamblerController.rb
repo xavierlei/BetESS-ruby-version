@@ -30,7 +30,7 @@ class GamblerController < Object
 			@bet_list[event_id]=[]
 		end
 		@bet_list[event_id].push(betController)
-		@model.setCoins(betController.model.value)
+		@model.setCoins(@model.coins - betController.model.value)
 	end
 
 	def printBets
@@ -52,6 +52,14 @@ class GamblerController < Object
 		@model.setUsername(name)
 		@model.setPassword(pass)
 		@model.setCoins(coins)
+	end
+
+	def storeNotification(message)
+		@model.addNotification(message)
+	end
+
+	def readAllNotifications
+		@model.notifications.each { |msg| @view.showNotification(msg)}
 	end
 
 end
