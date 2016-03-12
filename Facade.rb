@@ -18,13 +18,6 @@ class Facade < Object
   end
 
 
-#BEGIN listar Hashes ------
-def listarEventos
-  @events.each do |key,value|
-      puts "#{key} - #{value}"
-  end
-end
-#END listar Hashes --------
 
 
   # Login for Gamblers and Bookies ---------
@@ -75,7 +68,9 @@ end
     end
   end
   def bettingHistory(gambler_id)
-    puts "NotImplemented"
+    if @gamblers.key?(gambler_id)
+      @gamblers[gambler_id].printBets
+    end
   end
 
   # Bookie ---------------------------------
@@ -102,7 +97,7 @@ end
 
   def payGamblers(event_id)
     total = 0.0
-    @events[event_id].bet_list.each do |key,gamblerBets| 
+    @events[event_id].bet_list.each do |key,gamblerBets|
       gamblerBets.each do |bet|
         if @events[event_id].model.result == bet.model.result
           o = bet.model.result == "win" ? bet.model.odd[0] : (bet.model.result == "draw" ? bet.model.odd[1] : bet.model.odd[2])
@@ -117,7 +112,7 @@ end
   def endEvent(event_id)
     if @events.key?(event_id)
       @events[event_id].setResult
-      @events[event_id].notifyObserver(@bookies[@events[event_id].model.owner_id],"total win for event #{event_id} is #{payGamblers(event_id)} coins")   
+      @events[event_id].notifyObserver(@bookies[@events[event_id].model.owner_id],"total win for event #{event_id} is #{payGamblers(event_id)} coins")
     end
   end
 
@@ -135,6 +130,15 @@ end
       end
     end
   end
+
+  def listEvents(owner_id)
+    @events.each do |key,value|
+      if value.model.owner_id == owner_id
+        value.updateView
+      end
+    end
+  end
+
   def bookieNotifications
     puts "NotImplemented"
   end
@@ -153,13 +157,7 @@ end
       @events[event_id].model.setState(true)
     end
   end
-  def listEvents(owner_id)
-    @events.each do |key,value|
-      if value.model.owner_id == owner_id
-        value.updateView
-      end
-    end
-  end
+
   def listGamblerAvailableEvents
     @events.each do |key,value|
       if value.model.state == true

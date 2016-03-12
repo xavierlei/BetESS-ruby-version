@@ -36,7 +36,12 @@ class SportEventView < Object
 	def updateState
 		puts "input event state"
 		s = gets.chomp
+		to_boolean(s)
 	end
+
+	def to_boolean(str)
+  	str == 'true'
+  end
 
 	def setResult
 		puts "input the ending result"

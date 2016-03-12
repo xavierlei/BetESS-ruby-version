@@ -22,7 +22,7 @@ module Subject
 		@observers.each do|obj|
 			if obj == observer
 				obj.updateObserver(message)
-			end  
+			end
 		end
 	end
 	def notifyObservers(message)

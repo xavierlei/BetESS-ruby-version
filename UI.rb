@@ -1,4 +1,5 @@
 require_relative 'Facade.rb'
+
 class UI < Object
 
 	def initialize
@@ -9,57 +10,94 @@ class UI < Object
 	end
 
 	def printMenuLogin
-		puts "register [bookie | gambler]"
-		puts "login [bookie | gambler] [username] [password]"
-		puts "exit"
+		puts " register [bookie | gambler]"
+		puts " login [bookie | gambler] [username] [password]"
+		puts " exit"
 	end
 
 	def printMenuGambler
-		puts "listevents"
-		puts "bet [event_id]"
-		puts "mybets"
-		puts "setings"
-		puts "exit"
-		print "gambler>"
-
+		puts " listevents"
+		puts " bet [event_id]"
+		puts " mybets"
+		puts " settings"
+		puts " exit"
 	end
 
 	def printMenuBookie
-		puts "list events"
-		puts "myevents"
-		puts "observe [event_id]"
-		puts "update [event_id]"
-		puts "close [event_id]"
-		puts "setings"
-		puts "exit"
-		print "bookie>"
+		puts " listevents"
+		puts " myevents"
+		puts " observe [event_id]"
+		puts " update [event_id]"
+		puts " close [event_id]"
+		puts " settings"
+		puts " exit"
+		#print "bookie>"
 		#$stdout.flush
 	end
 
 	def loggedGambler
 		while @logged && @on do
-			self.printMenuGambler
+			print "gambler-"
+			print "#{@session.model.username}".cyan
+			print ">"
 			cmd = gets.chomp.split(" ")
-			#puts cmd
 			case cmd[0]
 			when "listevents"
-				puts "---  Eventos  ---"
+				puts "---  Available Events  ---"
 				@facade.listGamblerAvailableEvents
+				puts "--------------------------"
 			when "bet"
+				if cmd[1]
+					@facade.placeBet(cmd[1].to_i,@session.model.username)
+				end
 			when "mybets"
-			when "setings"
+				@facade.bettingHistory(@session.model.username)
+			when "settings"
 			when "exit"
+				@on = false
+			when nil
 			else
 				puts "Command not recognized !"
+				puts "________________________"
+				self.printMenuGambler
+				puts "________________________"
 			end
 		end
 	end
 
 	def loggedBookie
 		while @logged && @on do
-			self.printMenuBookie
-			cmd = gets.chomp
-			puts cmd
+			print "bookie-"
+			print "#{@session.model.username}".yellow
+			print ">"
+			cmd = gets.chomp.split(" ")
+			case cmd[0]
+			when "listevents"
+				@facade.listGamblerAvailableEvents
+			when "myevents"
+				@facade.listEvents(@session.model.username)
+			when "observe"
+				if cmd[1]
+					@facade.showInterestBookie(@session.model.username,cmd[1].to_i)
+				end
+			when "update"
+				if cmd[1]
+					@facade.updateEventState(cmd[1].to_i)
+				end
+			when "close"
+				if cmd[1]
+					@facade.endEvent(cmd[1].to_i)
+				end
+			when "settings"
+			when "exit"
+				@on = false
+			when nil
+			else
+				puts "Command not recognized !"
+				puts "________________________"
+				self.printMenuBookie
+				puts "________________________"
+			end
 		end
 	end
 
@@ -112,8 +150,13 @@ class UI < Object
 
 
 	def commandLine
+		puts "                     ".negative.cyan
+		puts " Bem-Vindo ao BetESS ".negative.cyan
+		puts "                     ".negative.cyan
 		while @on do
 			self.printMenuLogin
+			print "main-menu".green
+			print ">"
 			cmd = gets.chomp.split(" ")
 			if !(cmd.empty?)
 				case cmd[0]
@@ -121,6 +164,7 @@ class UI < Object
 					register(cmd)
 				when "login"
 					login(cmd)
+					@on = true
 				when "exit"
 					@on = false
 				else
@@ -130,4 +174,29 @@ class UI < Object
 		end
 	end
 
+end
+
+
+
+
+class String
+  { :reset          =>  0,
+    :bold           =>  1,
+    :dark           =>  2,
+    :underline      =>  4,
+    :blink          =>  5,
+    :negative       =>  7,
+    :black          => 30,
+    :red            => 31,
+    :green          => 32,
+    :yellow         => 33,
+    :blue           => 34,
+    :magenta        => 35,
+    :cyan           => 36,
+    :white          => 37,
+  }.each do |key, value|
+    define_method key do
+      "\e[#{value}m" + self + "\e[0m"
+    end
+  end
 end
