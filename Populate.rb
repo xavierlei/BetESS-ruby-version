@@ -44,5 +44,6 @@ class Populate < Object
 		events[3] = control
 		event_counter+=1
 
+		return event_counter
 	end
 end

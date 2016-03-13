@@ -30,6 +30,7 @@ class UI < Object
 	def printMenuBookie
 		puts " #{"listevents".green} - list all available events to gamblers"
 		puts " #{"myevents".green} - list all events owned by you"
+		puts " #{"newevent".green} - create new event"
 		puts " #{"observe [event_id]".green} - receive notifications from this event"
 		puts " #{"update [event_id]".green} - update status for this event"
 		puts " #{"changeodd [event_id]".green} - update odd for this event"
@@ -88,6 +89,8 @@ class UI < Object
 				puts "--------------------------"
 			when "myevents"
 				@facade.listEvents(@session.model.username)
+			when "newevent"
+				@facade.newEvent(@session.model.username)
 			when "observe"
 				if cmd[1]
 					@facade.showInterestBookie(@session.model.username,cmd[1].to_i)
@@ -109,7 +112,7 @@ class UI < Object
 			when "settings"
 			when "man"
 				puts "________________________"
-				self.printMenuGambler
+				self.printMenuBookie
 				puts "________________________"
 			when "exit"
 				@on = false

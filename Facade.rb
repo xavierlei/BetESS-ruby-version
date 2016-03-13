@@ -15,7 +15,7 @@ class Facade < Object
     @events = Hash.new("event doesnt exist!\n") #SportEventController
     # Populate -------------------------------
     pop = Populate.new
-    pop.populate(@gamblers, @bookies, @events, @event_counter)
+    @event_counter = pop.populate(@gamblers, @bookies, @events, @event_counter)
   end
 
 
@@ -152,7 +152,6 @@ class Facade < Object
     controller.createSportEvent
     controller.addObserver(@bookies[owner]) #adiciona o bookie como observador do proprio evento
     @events[controller.model.event_id] = controller
-    puts @events
   end
 
   def openEvent(event_id)
