@@ -1,12 +1,13 @@
 class SportEventView < Object
 
 	def printView(event_id,state,team1,team2,odd,result)
-		puts "______________"
-		puts "id: #{event_id}"
-		puts "state: #{state}"
-		puts "#{team1} X #{team2}"
-		puts "odds = {#{odd[0]},#{odd[1]},#{odd[2]}}"
-		puts "result = #{result}"
+		puts " ______________"
+		puts " id: #{event_id}"
+		puts " state: #{state}"
+		puts " #{team1} X #{team2}"
+		puts " odds = {#{odd[0]},#{odd[1]},#{odd[2]}}"
+		puts " result = #{result}"
+		puts " ______________"
 	end
 
 	def createView
@@ -34,17 +35,17 @@ class SportEventView < Object
 	end
 
 	def updateState
-		puts "input event state"
+		puts "input event state [open | closed]"
 		s = gets.chomp
 		to_boolean(s)
 	end
 
 	def to_boolean(str)
-  	str == 'true'
+  	str == 'open'
   end
 
 	def setResult
-		puts "input the ending result"
+		puts "input the ending result [win | draw | loss]"
 		return gets.chomp
 	end
 

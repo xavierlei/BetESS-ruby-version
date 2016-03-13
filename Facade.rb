@@ -19,34 +19,6 @@ class Facade < Object
   end
 
 
-
-
-  # Login for Gamblers and Bookies ---------
-  def gamblerLogin(username, password)
-    if @gamblers.key?(username)
-      if password == @gamblers[username].model.password
-        puts "[OK]\tLogin completed. Welcome #{username}\n"
-        controller = @gamblers[username]
-      else
-        return nil
-      end
-    else
-      puts "[!]\tFalhou o Login para #{username}"
-    end
-  end
-  def bookieLogin(username, password)
-    if @bookies.key?(username)
-      if password ==  @bookies[username].model.password
-        puts "[OK]\tLogin completed. Welcome #{username}\n"
-        controller =  @bookies[username]
-      else
-        return nil
-      end
-    else
-      puts "[!]\tFalhou Login para #{username}"
-    end
-  end
-
   # Gambler --------------------------------
   def registerGambler
     controller = GamblerController.new
@@ -59,11 +31,21 @@ class Facade < Object
     end
   end
 
+  def gamblerLogin(username, password)
+    if @gamblers.key?(username)
+      if password == @gamblers[username].model.password
+        controller = @gamblers[username]
+      else
+        return nil
+      end
+    end
+  end
+
   def placeBet(event_id, gambler_id)
-    if @events.key?(event_id)
+    if (@events.key?(event_id) && @events[event_id].model.state==true)
       bet_controller = BetController.new
       odd = @events[event_id].model.odd
-      bet_controller.create(gambler_id,odd)
+      bet_controller.create(gambler_id,odd,@gamblers[gambler_id].model.coins)
       @events[event_id].addBet(bet_controller)
       @gamblers[gambler_id].registBet(event_id,bet_controller)
     end
@@ -73,6 +55,9 @@ class Facade < Object
     if @gamblers.key?(gambler_id)
       @gamblers[gambler_id].printBets
     end
+  end
+  def gamblerNotifications(gambler_id)
+    @gamblers[gambler_id].readAllNotifications
   end
 
   # Bookie ---------------------------------
@@ -86,11 +71,23 @@ class Facade < Object
       return controller
     end
   end
+
+  def bookieLogin(username, password)
+    if @bookies.key?(username)
+      if password ==  @bookies[username].model.password
+        controller =  @bookies[username]
+      else
+        return nil
+      end
+    end
+  end
+
   def updateEventState(event_id)
     if @events.key?(event_id)
       @events[event_id].updateState
     end
   end
+
   def changeOdd(event_id)
     if @events.key?(event_id)
       @events[event_id].updateOdd
@@ -104,8 +101,10 @@ class Facade < Object
         if @events[event_id].model.result == bet.model.result
           o = bet.model.result == "win" ? bet.model.odd[0] : (bet.model.result == "draw" ? bet.model.odd[1] : bet.model.odd[2])
           @gamblers[bet.model.gambler_id].addCoins(o*bet.model.value)
-          @gamblers[bet.model.gambler_id].storeNotification("#{"You Win! ".green} #{o*bet.model.value} coins, event_id:#{event_id}, for the result:#{bet.model.result}" )
+          @gamblers[bet.model.gambler_id].updateObserver("#{"you won a bet! ".green} #{o*bet.model.value} coins, event_id:#{event_id}, for result:#{bet.model.result}" )
           total+=(o*bet.model.value)
+        else
+          @gamblers[bet.model.gambler_id].updateObserver("#{"you lost a bet! ".red} #{bet.model.value} coins, event_id:#{event_id}, for result:#{bet.model.result}")
         end
       end
     end
@@ -142,9 +141,10 @@ class Facade < Object
     end
   end
 
-  def bookieNotifications
-    puts "NotImplemented"
+  def bookieNotifications(bookie_id)
+    @bookies[bookie_id].readAllNotifications
   end
+
 
   # Event ----------------------------------
   def newEvent(owner)

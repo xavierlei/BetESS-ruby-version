@@ -14,4 +14,7 @@ class BookieView < Object
 		puts "type your new password"
 		password = gets.chomp
 	end
+	def showNotification(msg)
+		puts msg
+	end
 end

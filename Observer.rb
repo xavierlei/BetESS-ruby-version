@@ -1,7 +1,9 @@
 module Observer
-	def updateObserver(message)
-		puts"##########NOTIFICATION##########"
-		puts message
-		puts "###############################"
+	def initialize
+		@notifications = Array.new
 	end
+	def updateObserver(message)
+		@notifications.push(message)
+	end
+	
 end

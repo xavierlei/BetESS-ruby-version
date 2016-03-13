@@ -8,8 +8,8 @@ class BetController < Object
 		@model = Bet.new
 		@model.setGambler("Joe Spaghetti O's")
 	end
-	def create(gambler_id,odd)
-		query = @view.createView
+	def create(gambler_id,odd,credit)
+		query = @view.createView(credit)
 		@model.setGambler(gambler_id)
 		@model.setValue(query[0])
 		@model.setResult(query[1])

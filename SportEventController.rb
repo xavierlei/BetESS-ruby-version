@@ -2,7 +2,7 @@ require_relative 'SportEvent.rb'
 require_relative 'SportEventView.rb'
 require_relative 'Subject.rb'
 ## de forma a não alterar todo o código, o addObserver para o bookie dono será feito no facade
-## o mesmo para o calculo do total ganho e notify desse total 
+## o mesmo para o calculo do total ganho e notify desse total
 class SportEventController < Object
 	include Subject
 	attr_reader :model, :bet_list
@@ -13,10 +13,11 @@ class SportEventController < Object
 		@bet_list = Hash.new('Gambler has no Bets on this SportsEvent')
 	end
 
-	def createDefaultSportEvent(team1, team2, odd)
+	def createDefaultSportEvent(team1, team2, odd, state)
 		@model.setTeam1(team1)
 		@model.setTeam2(team2)
 		@model.setOdd(odd)
+		@model.setState(state)
 	end
 
 	def createSportEvent

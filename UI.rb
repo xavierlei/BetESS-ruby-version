@@ -13,27 +13,30 @@ class UI < Object
 	def printMenuLogin
 		puts " register [bookie | gambler]"
 		puts " login [bookie | gambler] [username] [password]"
-		puts " exit"
+		puts " exit "
 	end
 
 	def printMenuGambler
-		puts " listevents"
-		puts " bet [event_id]"
-		puts " mybets"
-		puts " settings"
-		puts " exit"
+		puts " #{"listevents".green} - list all available events"
+		puts " #{"bet [event_id]".green} - place a bet on the event"
+		puts " #{"mybets".green} - betting history"
+		puts " #{"readmessages".green} - read all notifications "
+		puts " #{"profileinfo".green} - shows your profile information"
+		puts " #{"settings".green} - change profile information"
+		puts " #{"man".green} - shows this commands list"
+		puts " #{"exit".green} - go back to main-menu"
 	end
 
 	def printMenuBookie
-		puts " listevents"
-		puts " myevents"
-		puts " observe [event_id]"
-		puts " update [event_id]"
-		puts " close [event_id]"
-		puts " settings"
-		puts " exit"
-		#print "bookie>"
-		#$stdout.flush
+		puts " #{"listevents".green} - list all available events to gamblers"
+		puts " #{"myevents".green} - list all events owned by you"
+		puts " #{"observe [event_id]".green} - receive notifications from this event"
+		puts " #{"update [event_id]".green} - update status for this event"
+		puts " #{"changeodd [event_id]".green} - update odd for this event"
+		puts " #{"close [event_id]".green} - insert final result of the match"
+		puts " #{"readmessages".green} - read all notifications "
+		puts " #{"settings".green} - change profile information"
+		puts " #{"exit".green} - go back to main-menu"
 	end
 
 	def loggedGambler
@@ -53,15 +56,21 @@ class UI < Object
 				end
 			when "mybets"
 				@facade.bettingHistory(@session.model.username)
+			when "readmessages"
+				@facade.gamblerNotifications(@session.model.username)
+			when "profileinfo"
+				@session.profileInfo
 			when "settings"
+				@session.updateUser
+			when "man"
+				puts "________________________"
+				self.printMenuGambler
+				puts "________________________"
 			when "exit"
 				@on = false
 			when nil
 			else
-				puts "Command not recognized !"
-				puts "________________________"
-				self.printMenuGambler
-				puts "________________________"
+				puts " Command not recognized! - use command #{"man".green} to see a list of commands "
 			end
 		end
 	end
@@ -74,7 +83,9 @@ class UI < Object
 			cmd = gets.chomp.split(" ")
 			case cmd[0]
 			when "listevents"
+				puts "---  Available Events  ---"
 				@facade.listGamblerAvailableEvents
+				puts "--------------------------"
 			when "myevents"
 				@facade.listEvents(@session.model.username)
 			when "observe"
@@ -85,19 +96,26 @@ class UI < Object
 				if cmd[1]
 					@facade.updateEventState(cmd[1].to_i)
 				end
+			when "changeodd"
+				if cmd[1]
+					@facade.changeOdd(cmd[1].to_i)
+				end
 			when "close"
 				if cmd[1]
 					@facade.endEvent(cmd[1].to_i)
 				end
+			when "readmessages"
+				@facade.bookieNotifications(@session.model.username)
 			when "settings"
+			when "man"
+				puts "________________________"
+				self.printMenuGambler
+				puts "________________________"
 			when "exit"
 				@on = false
 			when nil
 			else
-				puts "Command not recognized !"
-				puts "________________________"
-				self.printMenuBookie
-				puts "________________________"
+				puts " Command not recognized! - use command #{"man".green} to see a list of commands "
 			end
 		end
 	end
@@ -114,14 +132,20 @@ class UI < Object
 			when "bookie"
 				@session = @facade.bookieLogin(cmd[2],cmd[3])
 				if @session != nil
+					puts "#{"Login complete!".negative.green}\n Welcome #{cmd[2]}!"
 					@logged = true
 					self.loggedBookie
+				else
+					puts "Login #{"failed".negative.red}, user:#{cmd[2]}"
 				end
 			when "gambler"
 				@session = @facade.gamblerLogin(cmd[2],cmd[3])
 				if @session!=nil
+					puts "#{"Login complete!".negative.green}\n Welcome #{cmd[2]}!"
 					@logged = true
 					self.loggedGambler
+				else
+					puts "Login #{"failed".negative.red}, user:#{cmd[2]}"
 				end
 			else
 				puts "syntax error, see manual"
@@ -151,13 +175,12 @@ class UI < Object
 
 
 	def commandLine
-		puts "                     ".negative.cyan
-		puts " Bem-Vindo ao BetESS ".negative.cyan
-		puts "                     ".negative.cyan
+		puts " \t                   \t   ".negative.cyan
+		puts " \tBem-Vindo ao BetESS\t   ".negative.cyan
+		puts " \t                   \t   ".negative.cyan
 		while @on do
 			self.printMenuLogin
-			print "main-menu".green
-			print ">"
+			print "#{"main-menu".green}>"
 			cmd = gets.chomp.split(" ")
 			if !(cmd.empty?)
 				case cmd[0]

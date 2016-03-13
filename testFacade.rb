@@ -13,7 +13,7 @@ facade = Facade.new
 
 
 #Gambler Login
-ana = facade.gamblerLogin("ana", "123")
+ana = facade.gamblerLogin("joaquim", "123")
 afonso = facade.gamblerLogin("afonso", "123")
 print " \tUserName = #{afonso.model.username}\n"
 
@@ -35,3 +35,5 @@ afonso.printBets
 facade.endEvent(1)
 
 afonso.readAllNotifications
+
+ana.readAllNotifications

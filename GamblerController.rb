@@ -19,7 +19,9 @@ class GamblerController < Object
 		@model.setCoins(data[2])
 		@bet_list
 	end
-
+	def profileInfo
+		@view.showProfileInfo(@model.username,@model.password,@model.coins)
+	end
 	def updateUser
 		data = @view.updateView
 		@model.setPassword(data[0])
@@ -59,7 +61,9 @@ class GamblerController < Object
 	end
 
 	def readAllNotifications
-		@model.notifications.each { |msg| @view.showNotification(msg)}
+		if @notifications != nil
+			@notifications.each { |msg| @view.showNotification(msg)}
+		end
 	end
 
 end

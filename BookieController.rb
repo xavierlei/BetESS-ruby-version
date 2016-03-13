@@ -27,5 +27,10 @@ class BookieController < Object
 		@model.setPassword(pass)
 	end
 
+	def readAllNotifications
+		if @notifications != nil
+			@notifications.each { |msg| @view.showNotification(msg)}
+		end
+	end
 
 end
