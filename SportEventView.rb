@@ -16,21 +16,21 @@ class SportEventView < Object
 		puts "input team2"
 		team2 = gets.chomp
 		puts "input odd for team 1"
-		o1 = gets.chomp
+		o1 = gets.chomp.to_f
 		puts "input odd for draw"
-		od = gets.chomp
+		od = gets.chomp.to_f
 		puts "input odd for team 2"
-		o2 = gets.chomp
+		o2 = gets.chomp.to_f
 		res = [team1,team2,[o1,od,o2]]
 	end
 
 	def updateOdd
 		puts "input new odd for team 1"
-		o1 = gets.chomp
+		o1 = gets.chomp.to_f
 		puts "input new odd for draw"
-		od = gets.chomp
+		od = gets.chomp.to_f
 		puts "input new odd for team 2"
-		o2 = gets.chomp
+		o2 = gets.chomp.to_f
 		res = [o1,od,o2]
 	end
 
@@ -41,8 +41,8 @@ class SportEventView < Object
 	end
 
 	def to_boolean(str)
-  	str == 'open'
-  end
+  		str == 'open'
+  	end
 
 	def setResult
 		puts "input the ending result [win | draw | loss]"
