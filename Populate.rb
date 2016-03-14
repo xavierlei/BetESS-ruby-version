@@ -1,6 +1,6 @@
-require_relative 'GamblerController.rb'
-require_relative 'SportEventController.rb'
-require_relative 'BookieController.rb'
+require_relative './MVC/GamblerController.rb'
+require_relative './MVC/SportEventController.rb'
+require_relative './MVC/BookieController.rb'
 
 class Populate < Object
 	def populate(gamblers, bookies, events, event_counter)

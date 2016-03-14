@@ -1,7 +1,7 @@
-require_relative 'GamblerController.rb'
-require_relative 'BookieController.rb'
-require_relative 'SportEventController.rb'
-require_relative 'BetController.rb'
+require_relative './MVC/GamblerController.rb'
+require_relative './MVC/BookieController.rb'
+require_relative './MVC/SportEventController.rb'
+require_relative './MVC/BetController.rb'
 require_relative 'Populate.rb'
 require_relative 'String.rb'
 

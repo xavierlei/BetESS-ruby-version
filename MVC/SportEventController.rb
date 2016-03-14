@@ -1,6 +1,6 @@
 require_relative 'SportEvent.rb'
 require_relative 'SportEventView.rb'
-require_relative 'Subject.rb'
+require_relative '../ObserverPattern/Subject.rb'
 ## de forma a não alterar todo o código, o addObserver para o bookie dono será feito no facade
 ## o mesmo para o calculo do total ganho e notify desse total
 class SportEventController < Object

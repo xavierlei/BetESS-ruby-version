@@ -1,4 +1,4 @@
-require_relative 'BookieController.rb'
+require_relative '../MCV/BookieController.rb'
 bookie = BookieController.new
 bookie.create
 bookie.updateView

@@ -1,6 +1,6 @@
 require_relative 'Gambler.rb'
 require_relative 'GamblerView.rb'
-require_relative 'Observer.rb'
+require_relative '../ObserverPattern/Observer.rb'
 
 class GamblerController < Object
 	include Observer

@@ -1,7 +1,7 @@
 
-require_relative 'SportEventController.rb'
-require_relative 'GamblerController.rb'
-require_relative 'BookieController.rb'
+require_relative '../MCV/SportEventController.rb'
+require_relative '../MCV/GamblerController.rb'
+require_relative '../MCV/BookieController.rb'
 e1 = SportEventController.new("xavier",1)
 e1.createSportEvent
 g1 = GamblerController.new

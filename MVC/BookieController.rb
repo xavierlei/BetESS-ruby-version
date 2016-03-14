@@ -1,6 +1,6 @@
 require_relative 'Bookie.rb'
 require_relative 'BookieView.rb'
-require_relative 'Observer.rb'
+require_relative '../ObserverPattern/Observer.rb'
 class BookieController < Object
 	include Observer
 	attr_reader :model

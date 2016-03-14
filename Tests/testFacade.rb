@@ -1,5 +1,5 @@
-require_relative "Facade.rb"
-require_relative "GamblerController.rb"
+require_relative "../Facade.rb"
+require_relative "../MCV/GamblerController.rb"
 
 facade = Facade.new
 
