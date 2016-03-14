@@ -20,6 +20,7 @@ class UI < Object
 		puts " #{"listevents".green} - list all available events"
 		puts " #{"bet [event_id]".green} - place a bet on the event"
 		puts " #{"mybets".green} - betting history"
+		puts " #{"observe [event_id]".green}"
 		puts " #{"readmessages".green} - read all notifications "
 		puts " #{"profileinfo".green} - shows your profile information"
 		puts " #{"settings".green} - change profile information"
@@ -57,6 +58,8 @@ class UI < Object
 				end
 			when "mybets"
 				@facade.bettingHistory(@session.model.username)
+			when "observe"
+				@facade.showInterestGambler(@session.model.username, cmd[1].to_i)
 			when "readmessages"
 				@facade.gamblerNotifications(@session.model.username)
 			when "profileinfo"
