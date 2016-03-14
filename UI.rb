@@ -59,7 +59,9 @@ class UI < Object
 			when "mybets"
 				@facade.bettingHistory(@session.model.username)
 			when "observe"
-				@facade.showInterestGambler(@session.model.username, cmd[1].to_i)
+				if cmd[1]
+					@facade.showInterestGambler(@session.model.username, cmd[1].to_i)
+				end
 			when "readmessages"
 				@facade.gamblerNotifications(@session.model.username)
 			when "profileinfo"

@@ -28,9 +28,4 @@ module Subject
 	def notifyObservers(message)
 			@observers.each{|observer| observer.updateObserver(message)}
 	end
-=begin
-	def notifyObservers
-		@observer.each{|observer| observer.update(self)} #põe-se o self para enviar o propio subject
-	end
-=end
 end
