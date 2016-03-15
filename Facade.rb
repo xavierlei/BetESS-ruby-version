@@ -115,6 +115,7 @@ class Facade < Object
     if @events.key?(event_id)
       @events[event_id].setResult
       @events[event_id].notifyObserver(@bookies[@events[event_id].model.owner_id],"total win for event #{event_id} is #{payGamblers(event_id)} coins")
+      @events[event_id].deleteObservers
     end
   end
 
