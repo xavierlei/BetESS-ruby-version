@@ -25,7 +25,7 @@ module Subject
 			end
 		end
 	end
-	def notifyObservers(message)
+	def notifyAllObservers(message)
 			@observers.each{|observer| observer.updateObserver(message)}
 	end
 end
